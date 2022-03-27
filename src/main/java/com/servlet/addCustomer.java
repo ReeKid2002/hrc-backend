@@ -22,10 +22,10 @@ public class addCustomer extends HttpServlet {
     }
     
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// The below line is to handle CORS Policy which prevent React which is running on different domain to make a GET or Post request to the Java Servlet. 
+		response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
+		
 		try {
-			// The below line is to handle CORS Policy which prevent React which is running on different domain to make a GET or Post request to the Java Servlet. 
-			response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
-						
 			// Creating New SQL Connection to the DB
 			SQLConnector sqlConnector = new SQLConnector(); 
 			Connection connection = sqlConnector.getConnection();
@@ -67,12 +67,15 @@ public class addCustomer extends HttpServlet {
 			
 			// Checking is the query is executed correctly and Sending result back to front-end. 
 			if(numberOfRowsAffected > 0) { // If Query Executed Successfully
+				response.setStatus(200);
 				response.getWriter().print("New Customer Succesfully Added");
 			} else { // If Query Executed but no change in DB.
+				response.setStatus(500);
 				response.getWriter().print("New Customer Can't Be Succesfully Added");
 			}
 		} catch (Exception error) {
 			error.printStackTrace();
+			response.setStatus(500);
 			// To Handle Internal Server Error.
 			response.getWriter().print("Internal Server Error");
 		}

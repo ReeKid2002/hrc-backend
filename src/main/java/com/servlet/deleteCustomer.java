@@ -9,9 +9,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
-import java.util.List;
 
 import com.connection.SQLConnector;
 
@@ -27,13 +25,12 @@ public class deleteCustomer extends HttpServlet {
 		response.addHeader("Access-Control-Allow-Origin", "http://localhost:3000");
 		
 		try {
-			
 			// Establishing DB Connection.
 			SQLConnector newConnection = new SQLConnector();
 			Connection connection = newConnection.getConnection();
 			
 			// Query to Delete the rows in DB.
-			String queryToDeleteRows = "DELETE FROM winter_internship WHERE sl_no=?";
+			String queryToDeleteRows = "UPDATE winter_internship SET is_deleted=1 WHERE sl_no=?";
 			PreparedStatement preparedStatement = connection.prepareStatement(queryToDeleteRows);
 			
 			//Getting Array of sl_no.
@@ -43,6 +40,7 @@ public class deleteCustomer extends HttpServlet {
 			Collections.addAll(finalList, subSLNOs.split(","));
 			
 			// Traversing through the array to delete the row(s).
+			int errorFlag = 0;
 			for(String s: finalList) {
 //				System.out.println(s);
 				preparedStatement.setInt(1, Integer.parseInt(s));
@@ -52,11 +50,19 @@ public class deleteCustomer extends HttpServlet {
 				
 				// Checking is the query is executed correctly and Sending result back to front-end. 
 				if(numberOfRowsAffected > 0) { // If Query Executed Successfully
-					System.out.println("Success");
 					continue;
 				} else { // If Query Executed but no change in DB.
-					response.getWriter().print("New Customer Can't Be Succesfully Added");
+					errorFlag = 1;
+					break;
 				}
+			}
+			
+			if(errorFlag == 0) {
+				response.setStatus(200);
+				response.getWriter().print("Invoice(s) Deleted Successfully.");
+			} else {
+				response.setStatus(500);
+				response.getWriter().print("New Customer Can't Be Succesfully Added");
 			}
 			
 			// Closing the connection to the DB.
@@ -64,6 +70,7 @@ public class deleteCustomer extends HttpServlet {
 			
 		} catch (Exception error) {
 			error.printStackTrace();
+			response.setStatus(500);
 			response.getWriter().print("Internal Server Error");
 		}
 	}

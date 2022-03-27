@@ -69,11 +69,13 @@ public class getAllCustomer extends HttpServlet {
 			String allCustomerJSON = new Gson().toJson(allCustomer);
 			
 			// Sending JSON back to front-end.
+			response.setStatus(200);
 			response.getWriter().print(allCustomerJSON);
 			
 		} catch (Exception error) {
 			error.printStackTrace();
 			// Handling Internal Server Error
+			response.setStatus(500);
 			response.getWriter().print("Internal Server Error");
 		}
 	}
