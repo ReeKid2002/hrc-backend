@@ -29,6 +29,15 @@ public class SQLConnector {
 			error.printStackTrace();
 		}
 	}
+	public void closeConnection(Connection connection, Statement statement1, Statement statement2) throws SQLException { // Method to close the connection. 
+		try {
+			connection.close();
+			statement1.close();
+			statement2.close();
+		} catch (Exception error) {
+			error.printStackTrace();
+		}
+	}
 	public void closeConnection(Connection connection, PreparedStatement preparedStatement) throws SQLException { // Method to close the connection.
 		try {
 			connection.close();

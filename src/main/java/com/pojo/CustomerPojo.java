@@ -9,7 +9,7 @@ public class CustomerPojo {
 	private String business_code;
 	private int cust_number;
 	private String clear_date;
-	private int buisness_year;
+	private int business_year;
 	private String doc_id;
 	private Date posting_date;
 	private Date document_create_date;
@@ -21,6 +21,27 @@ public class CustomerPojo {
 	private Date baseline_create_date;
 	private String cust_payment_terms;
 	private int invoice_id;
+	
+	// Constructor
+	public CustomerPojo() {
+		this.id = 0;
+		this.sl_no = 0;
+		this.business_code = "";
+		this.cust_number = 0;
+		this.clear_date = "";
+		this.business_year = 0;
+		this.doc_id = "";
+		this.posting_date = null;
+		this.document_create_date = null;
+		this.due_in_date = null;
+		this.invoice_currency = "";
+		this.document_type = "";
+		this.posting_id = 0;
+		this.total_open_amount = 0;
+		this.baseline_create_date = null;
+		this.cust_payment_terms = "";
+		this.invoice_id = 0;
+	}
 	
 	// Getter and Setter Method for the Data Members.
 	public int getId() {
@@ -53,11 +74,11 @@ public class CustomerPojo {
 	public void setClear_date(String clear_date) {
 		this.clear_date = ""+clear_date;
 	}
-	public int getBuisness_year() {
-		return buisness_year;
+	public int getBusiness_year() {
+		return business_year;
 	}
-	public void setBuisness_year(int buisness_year) {
-		this.buisness_year = buisness_year;
+	public void setBusiness_year(int business_year) {
+		this.business_year = business_year;
 	}
 	public String getDoc_id() {
 		return doc_id;

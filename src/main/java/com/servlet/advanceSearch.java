@@ -47,7 +47,7 @@ public class advanceSearch extends HttpServlet {
 				customer.setBusiness_code(resultSet.getString(2));
 				customer.setCust_number(resultSet.getInt(3));
 				customer.setClear_date(resultSet.getString(4));
-				customer.setBuisness_year(resultSet.getInt(5));
+				customer.setBusiness_year(resultSet.getInt(5));
 				customer.setDoc_id(resultSet.getString(6));
 				customer.setPosting_date(resultSet.getDate(7));
 				customer.setDocument_create_date(resultSet.getDate(8));
