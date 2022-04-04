@@ -11,6 +11,7 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 
 import com.connection.SQLConnector;
 import com.google.gson.Gson;
@@ -128,22 +129,23 @@ public class analytics extends HttpServlet {
 					
 			// Closing the connection to the DB.
 			newConnection.closeConnection(connection, statement1, statement2);
-					
-			// Creating JSON to the ArrayList.
-			String BarGraphArray = new Gson().toJson(barGraph);
-			String PieChartArray = new Gson().toJson(pieChart);
 			
 			// HashMap to send Both Data at a time.
-			HashMap<String, String> hashMap = new HashMap<String, String>();
-			hashMap.put("bsrgraph", BarGraphArray);
-			hashMap.put("piechart", PieChartArray);
-					
+			HashMap<String, ArrayList> hashMap = new HashMap<String, ArrayList>();
+			hashMap.put("bargraph", barGraph);
+			hashMap.put("piechart", pieChart);
+			
+			// Converting Map to JSON.
+			String Graph = new Gson().toJson(hashMap);
+			System.out.println(Graph);
+
 			// Sending JSON back to front-end.
-			response.getWriter().print(hashMap);
+			response.setStatus(200);
 					
 		} catch (Exception error) {
 			error.printStackTrace();
 			// Handling Internal Server Error
+			response.setStatus(500);
 			response.getWriter().print("Internal Server Error");
 		}
 	}
