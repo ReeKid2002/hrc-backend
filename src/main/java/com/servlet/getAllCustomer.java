@@ -32,7 +32,7 @@ public class getAllCustomer extends HttpServlet {
 			Connection connection = newConnection.getConnection();
 			
 			// Query to get All Customer Details from the DB.
-			String toGetAllCustomer = "SELECT sl_no, business_code, cust_number, clear_date, buisness_year, doc_id, posting_date, document_create_date, due_in_date, invoice_currency, document_type, posting_id, total_open_amount, baseline_create_date, cust_payment_terms, invoice_id FROM winter_internship WHERE is_deleted=0;";
+			String toGetAllCustomer = "SELECT sl_no, business_code, cust_number, clear_date, buisness_year, doc_id, posting_date, document_create_date, due_in_date, invoice_currency, document_type, posting_id, total_open_amount, baseline_create_date, cust_payment_terms, invoice_id, aging_bucket FROM winter_internship WHERE is_deleted=0;";
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(toGetAllCustomer);
 			
@@ -59,6 +59,7 @@ public class getAllCustomer extends HttpServlet {
 				customer.setBaseline_create_date(resultSet.getDate(14));
 				customer.setCust_payment_terms(resultSet.getString(15));
 				customer.setInvoice_id(resultSet.getInt(16));
+				customer.setAging_bucket(resultSet.getString(17));
 				allCustomer.add(customer);
 			}
 			

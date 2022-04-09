@@ -137,10 +137,11 @@ public class analytics extends HttpServlet {
 			
 			// Converting Map to JSON.
 			String Graph = new Gson().toJson(hashMap);
-			System.out.println(Graph);
+//			System.out.println(Graph);
 
 			// Sending JSON back to front-end.
 			response.setStatus(200);
+			response.getWriter().print(Graph);
 					
 		} catch (Exception error) {
 			error.printStackTrace();

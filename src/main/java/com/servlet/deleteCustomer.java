@@ -62,7 +62,7 @@ public class deleteCustomer extends HttpServlet {
 				response.getWriter().print("Invoice(s) Deleted Successfully.");
 			} else {
 				response.setStatus(500);
-				response.getWriter().print("New Customer Can't Be Succesfully Added");
+				response.getWriter().print("Invoice(s) Deleted Successfully.");
 			}
 			
 			// Closing the connection to the DB.

@@ -21,7 +21,8 @@ public class CustomerPojo {
 	private Date baseline_create_date;
 	private String cust_payment_terms;
 	private int invoice_id;
-	
+	private String aging_bucket;
+
 	// Constructor
 	public CustomerPojo() {
 		this.id = 0;
@@ -145,6 +146,12 @@ public class CustomerPojo {
 	}
 	public void setInvoice_id(int invoice_id) {
 		this.invoice_id = invoice_id;
+	}
+	public String getAging_bucket() {
+		return aging_bucket;
+	}
+	public void setAging_bucket(String aging_bucket) {
+		this.aging_bucket = aging_bucket;
 	}
 	
 }

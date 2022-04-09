@@ -89,4 +89,24 @@
     <servlet-name>analytics</servlet-name>
     <url-pattern>/analytics</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>getPredictData</display-name>
+    <servlet-name>getPredictData</servlet-name>
+    <servlet-class>com.servlet.getPredictData</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>getPredictData</servlet-name>
+    <url-pattern>/getPredictData</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>setPredictData</display-name>
+    <servlet-name>setPredictData</servlet-name>
+    <servlet-class>com.servlet.setPredictData</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>setPredictData</servlet-name>
+    <url-pattern>/setPredictData</url-pattern>
+  </servlet-mapping>
 </web-app>
