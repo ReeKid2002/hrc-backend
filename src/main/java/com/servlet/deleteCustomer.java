@@ -57,6 +57,9 @@ public class deleteCustomer extends HttpServlet {
 				}
 			}
 			
+			// Closing the connection to the DB.
+			newConnection.closeConnection(connection, preparedStatement);
+			
 			if(errorFlag == 0) {
 				response.setStatus(200);
 				response.getWriter().print("Invoice(s) Deleted Successfully.");
@@ -64,9 +67,6 @@ public class deleteCustomer extends HttpServlet {
 				response.setStatus(500);
 				response.getWriter().print("Invoice(s) Deleted Successfully.");
 			}
-			
-			// Closing the connection to the DB.
-			newConnection.closeConnection(connection, preparedStatement);
 			
 		} catch (Exception error) {
 			error.printStackTrace();

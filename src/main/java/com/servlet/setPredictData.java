@@ -8,6 +8,8 @@ import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.util.ArrayList;
+import java.util.Collections;
 
 import com.connection.SQLConnector;
 @WebServlet("/set-predict-data")
@@ -30,18 +32,39 @@ public class setPredictData extends HttpServlet {
 			String queryToSetDataForPredict = "UPDATE winter_internship SET aging_bucket = ? WHERE doc_id = ?;";
 			PreparedStatement preparedStatement = connection.prepareStatement(queryToSetDataForPredict);
 			
-			// Setting values for the Query.
-			preparedStatement.setString(1, request.getParameter("aging_bucket"));
-			preparedStatement.setString(2, request.getParameter("doc_id"));
+			// Storing Data in ArrayList.
+			ArrayList<String> agingBucketList = new ArrayList<String>();
+			ArrayList<String> docIdList = new ArrayList<String>();
+			Collections.addAll(agingBucketList, request.getParameter("aging_bucket").split(","));
+			Collections.addAll(docIdList, request.getParameter("doc_id").split(","));
+			System.out.println("AG: "+request.getParameter("aging_bucket")+", DI: "+request.getParameter("doc_id"));
+			System.out.println("AG Size: "+agingBucketList.size()+", DI Size: "+docIdList.size());
 			
-			// Executing the query.
-			int numberOfRowsAffected = preparedStatement.executeUpdate();
+			
+			// Looping over the list and executing the query.
+			int errorFlag = 0;
+			for(int itr=0; itr<agingBucketList.size(); ++itr) {
+				System.out.println("AB: "+agingBucketList.get(itr)+", DI: "+docIdList.get(itr));
+				// Setting values for the Query.
+				preparedStatement.setString(1, agingBucketList.get(itr));
+				preparedStatement.setLong(2, (long)Double.parseDouble(docIdList.get(itr)));
+				
+				System.out.println(preparedStatement);
+				// Executing the query.
+				int numberOfRowsAffected = preparedStatement.executeUpdate();
+				
+				// Checking for Error.
+				if(numberOfRowsAffected <= 0) {
+					errorFlag = 1;
+					break;
+				}
+			}
 			
 			// Closing the connection to the DB.
 			newConnection.closeConnection(connection, preparedStatement);
 			
 			// Checking is the query is executed correctly and Sending result back to front-end.
-			if(numberOfRowsAffected > 0) { // If Query Executed Successfully
+			if(errorFlag == 0) { // If Query Executed Successfully
 				response.setStatus(200);
 				response.getWriter().print("Perdicted Succesfully");
 			} else { // If Query Executed but no change in DB.

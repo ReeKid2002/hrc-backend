@@ -96,8 +96,8 @@ public class analytics extends HttpServlet {
 			analytics1 += " GROUP BY business_code;";
 			analytics2 += " GROUP BY invoice_currency;";
 			
-			System.out.println(analytics1);
-			System.out.println(analytics2);
+//			System.out.println(analytics1);
+//			System.out.println(analytics2);
 			Statement statement1 = connection.createStatement();
 			Statement statement2 = connection.createStatement();
 			
