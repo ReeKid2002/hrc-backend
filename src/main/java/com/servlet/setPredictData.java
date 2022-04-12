@@ -37,19 +37,15 @@ public class setPredictData extends HttpServlet {
 			ArrayList<String> docIdList = new ArrayList<String>();
 			Collections.addAll(agingBucketList, request.getParameter("aging_bucket").split(","));
 			Collections.addAll(docIdList, request.getParameter("doc_id").split(","));
-			System.out.println("AG: "+request.getParameter("aging_bucket")+", DI: "+request.getParameter("doc_id"));
-			System.out.println("AG Size: "+agingBucketList.size()+", DI Size: "+docIdList.size());
 			
 			
 			// Looping over the list and executing the query.
 			int errorFlag = 0;
 			for(int itr=0; itr<agingBucketList.size(); ++itr) {
-				System.out.println("AB: "+agingBucketList.get(itr)+", DI: "+docIdList.get(itr));
 				// Setting values for the Query.
 				preparedStatement.setString(1, agingBucketList.get(itr));
 				preparedStatement.setLong(2, (long)Double.parseDouble(docIdList.get(itr)));
 				
-				System.out.println(preparedStatement);
 				// Executing the query.
 				int numberOfRowsAffected = preparedStatement.executeUpdate();
 				
