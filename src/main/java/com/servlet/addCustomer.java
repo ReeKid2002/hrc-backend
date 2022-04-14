@@ -45,7 +45,11 @@ public class addCustomer extends HttpServlet {
 			preparedStatement.setInt(1, maxslno + 1);
 			preparedStatement.setString(2, request.getParameter("business_code"));
 			preparedStatement.setInt(3, Integer.parseInt(request.getParameter("cust_number")));
-			preparedStatement.setDate(4, request.getParameter("clear_date").length() == 0 ? null: java.sql.Date.valueOf((request.getParameter("clear_date"))));
+			if(request.getParameter("clear_date").length() == 0) {
+				preparedStatement.setNull(4, java.sql.Types.DATE);
+			} else {
+				preparedStatement.setDate(4, java.sql.Date.valueOf((request.getParameter("clear_date"))));
+			}
 			preparedStatement.setInt(5, Integer.parseInt(request.getParameter("business_year")));
 			preparedStatement.setString(6, request.getParameter("doc_id"));
 			preparedStatement.setDate(7, java.sql.Date.valueOf((request.getParameter("posting_date"))));
